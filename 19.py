@@ -15,17 +15,20 @@ def create_binary_file():
 def search_roll_no():
     """Searches for a roll number in the binary file."""
     with open('students.dat', 'rb') as file:
-        while True:
-            try:
-                student_records = pickle.load(file)
-            except EOFError:
-                break
+        student_records = {}  # Initialize an empty dictionary
+        try:
+            while True:
+                # Load all records into the dictionary
+                student_records.update(pickle.load(file))
+        except EOFError:
+            pass  # Exit loop when end of file is reached
 
-            roll_no = int(input("Enter Roll Number to search: "))
-            if roll_no in student_records:
-                print("## Name is :", student_records[roll_no], "##")
-            else:
-                print("## Rollno not found ##")
+        roll_no = int(input("Enter Roll Number to search: "))
+        if roll_no in student_records:
+            print("## Name is :", student_records[roll_no], "##")
+        else:
+            print("## Rollno not found ##")
+
 
 # Create the binary file (uncomment if needed)
 # create_binary_file()
